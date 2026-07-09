@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaCore Research Labs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="game-wrapper">
+  <section class="card">
+
+    <div class="top-row">
+      <div class="level-badge" id="levelBadge">Start mise</div>
+
+      <div class="timer-box" id="timerBox">
+        ⏱ Čas: <span id="timer">60:00</span>
+      </div>
+    </div>
+
+    <h1 id="title">NovaCore Research Labs</h1>
+
+    <div class="voice-panel">
+      <button id="speakerButton" class="speaker-button" type="button" aria-label="Poslechni si text této obrazovky mužským počítačovým hlasem">
+        poslechni si
+      </button>
+      <span id="speakerStatus" class="speaker-status" aria-live="polite"></span>
+    </div>
+
+    <div id="imageBox" class="image-box hidden">
+      <img id="levelImage" src="" alt="Obrázek k úkolu">
+    </div>
+
+    <div id="text" class="story-text"></div>
+
+    <div id="teamForm" class="team-form">
+      <h2>Tým</h2>
+
+      <label>
+        Název týmu:
+        <input type="text" id="teamName" placeholder="např. Atomoví detektivové">
+      </label>
+
+      <label>
+        Hráč 1:
+        <input type="text" id="player1" placeholder="jméno hráče">
+      </label>
+
+      <label>
+        Hráč 2:
+        <input type="text" id="player2" placeholder="jméno hráče">
+      </label>
+
+      <label>
+        Hráč 3:
+        <input type="text" id="player3" placeholder="jméno hráče">
+      </label>
+
+      <label>
+        Hráč 4:
+        <input type="text" id="player4" placeholder="jméno hráče">
+      </label>
+
+      <p id="formMessage" class="message"></p>
+    </div>
+
+    <button id="startButton" class="start-button">Spustit misi</button>
+
+    <div id="codeBox" class="code-box hidden">
+      <label for="codeInput">Zadej čtyřmístný přístupový kód:</label>
+
+      <div class="code-row">
+        <input
+          type="text"
+          id="codeInput"
+          maxlength="4"
+          placeholder="____"
+          autocomplete="off"
+          inputmode="numeric"
+        >
+
+        <button id="checkButton">Ověřit kód</button>
+      </div>
+
+      <p id="message" class="message"></p>
+    </div>
+
+    <div id="resultBox" class="result-box hidden"></div>
+
+    <div class="result-buttons hidden" id="resultButtons">
+      <button id="copyButton">Zkopírovat výsledek</button>
+      <button id="emailButton">Odeslat výsledek e-mailem</button>
+    </div>
+
+    <button id="restartButton" class="restart hidden">Hrát znovu</button>
+
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
