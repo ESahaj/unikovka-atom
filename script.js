@@ -32,7 +32,7 @@ const levels = [
   {
     title: "Úkol 1: Rozmazané poznámky",
     badge: "Úroveň 1",
-    code: "1111",
+    code: "7204",
     image: "obrazky/ukol1.jpg",
     text: `
       <p>Červená světla se rozblikají a místností se rozezní varovné pípání. Lekneš se, prudce sebou trhneš a omylem převrhneš kelímek s kávou.</p>
@@ -43,7 +43,7 @@ const levels = [
   {
     title: "Úkol 2: Zásobní lahve",
     badge: "Úroveň 2",
-    code: "2222",
+    code: "8324",
     image: "obrazky/ukol2.jpg",
     text: `
       <p>Alarmy sice na okamžik zeslábly, ale reaktor je stále nestabilní. Červená světla blikají pomaleji, zato pravidelně – jako odpočítávání.</p>
@@ -54,7 +54,7 @@ const levels = [
   {
     title: "Úkol 3: Chromatogram",
     badge: "Úroveň 3",
-    code: "3333",
+    code: "6867",
     image: "obrazky/ukol3.jpg",
     text: `
       <p>Monitor náhle znovu zabliká. Objeví se záznam z plynového chromatografu. Křivky na obrazovce poskakují, hodnoty se mění a systém stále opakuje:</p>
@@ -66,7 +66,7 @@ const levels = [
   {
     title: "Úkol 4: Pohlednice",
     badge: "Úroveň 4",
-    code: "4444",
+    code: "2489",
     image: "obrazky/ukol4.jpg",
     text: `
       <p>Chromatogram se zastaví. Varovné hlášení na okamžik zmizí a v místnosti zavládne napjaté ticho.</p>
@@ -78,7 +78,7 @@ const levels = [
   {
     title: "Úkol 5: Periodická soustava",
     badge: "Úroveň 5",
-    code: "5555",
+    code: "1405",
     image: "obrazky/ukol5.jpg",
     text: `
       <p>Ani po zadání čtvrtého kódu se reaktor nestabilizoval. Systém se znovu otřese a na obrazovce se objeví periodická soustava prvků.</p>
@@ -90,7 +90,7 @@ const levels = [
   {
     title: "Úkol 6: Hra atomů s elektrony",
     badge: "Finální úroveň",
-    code: "6666",
+    code: "3210",
     image: "obrazky/ukol6.jpg",
     text: `
       <p>Řídicí systém reaktoru se přepíná do posledního nouzového režimu.</p>
