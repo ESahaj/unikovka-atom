@@ -40,21 +40,16 @@ const levels = [
     image: "obrazky/ukol1.jpg",
     text: `
       <p>
-        Jakmile se červená světla rozblikají a místností se rozezní
-        varovný pípající tón, lekneš se. Trhneš sebou a kávou poliješ
-        papíry ležící na stole.
+        Červená světla se rozblikají a místností se rozezní varovné pípání. Lekneš se, prudce sebou trhneš a omylem převrhneš kelímek s kávou.
       </p>
 
       <p>
-        Text se rozmaže – většina slov je sice stále čitelná,
-        některá už ale přečíst nejde. Je jen na Tobě, abys chybějící
-        slova doplnil.
+        Káva se rozlije přímo na důležité poznámky ležící na stole. Některá slova jsou pořád čitelná, jiná se úplně rozmazala.
       </p>
 
       <p>
         <strong>
-          První čtyřmístný kód se skládá z číslic, které určují počet
-          konkrétních písmen ve všech zcela nečitelných slovech.
+          Doplň chybějící slova a zjisti první čtyřmístný kód.
         </strong>
       </p>
 
