@@ -39,24 +39,9 @@ const levels = [
     code: "7204",
     image: "obrazky/ukol1.jpg",
     text: `
-      <p>
-        Červená světla se rozblikají a místností se rozezní varovné pípání. Lekneš se, prudce sebou trhneš a omylem převrhneš kelímek s kávou.
-      </p>
-
-      <p>
-        Káva se rozlije přímo na důležité poznámky ležící na stole. Některá slova jsou pořád čitelná, jiná se úplně rozmazala.
-      </p>
-
-      <p>
-        <strong>
-          Doplň chybějící slova a zjisti první čtyřmístný kód.
-        </strong>
-      </p>
-
-      <p>
-        Zadání správného kódu odemkne první bezpečnostní krok systému
-        a na chvíli ztiší alarmy…
-      </p>
+      <p>Červená světla se rozblikají a místností se rozezní varovné pípání. Lekneš se, prudce sebou trhneš a omylem převrhneš kelímek s kávou.</p>
+      <p>Káva se rozlije přímo na důležité poznámky ležící na stole. Některá slova jsou pořád čitelná, jiná se úplně rozmazala.</p>
+      <p><strong>Doplň chybějící slova a zjisti první čtyřmístný kód.</strong></p>
     `
   },
 
@@ -67,19 +52,9 @@ const levels = [
     code: "8324",
     image: "obrazky/ukol2.jpg",
     text: `
-      <p>
-        Alarmy sice na okamžik ztichly, ale reaktor je stále nestabilní
-        a červená světla nyní blikají pomaleji, zato pravidelně.
-      </p>
-
-      <p>
-        Vzduch v místnosti je těžký, napětí by se dalo krájet
-        a Tvůj zrak spočine na zásobních lahvích postavených na poličce.
-      </p>
-
-      <span class="system-message">
-        PRVNÍ ÚROVEŇ PŘEKONÁNA – JE PŘIPRAVEN DALŠÍ ČTYŘMÍSTNÝ KÓD
-      </span>
+       <p>Alarmy sice na okamžik zeslábly, ale reaktor je stále nestabilní. Červená světla blikají pomaleji, zato pravidelně – jako odpočítávání.</p>
+      <p>Všimneš si poličky se zásobními lahvemi. Na každé z nich je název prvku.</p>
+      <p><strong>Prozkoumej názvy prvků na lahvích a najdi druhý přístupový kód.</strong></p>
     `
   },
 
@@ -90,30 +65,10 @@ const levels = [
     code: "6867",
     image: "obrazky/ukol3.jpg",
     text: `
-      <p>
-        Monitor náhle znovu zabliká a objeví se chromatogram
-        z plynového chromatografu, který se neustále aktualizuje.
-        Křivky poskakují, hodnoty se mění a systém varuje:
-      </p>
-
-      <span class="system-message">
-        NESTABILITA ROSTE
-      </span>
-
-      <p>
-        Každá chybná interpretace zvyšuje riziko selhání.
-        Každý nesprávný krok a každé špatné rozhodnutí posouvá
-        reaktor blíž ke kritické fázi.
-      </p>
-
-      <p>
-        <strong>Čas běží – každá vteřina se počítá!</strong>
-      </p>
-
-      <p>
-        Teď jde o rychlost, přesnost a schopnost číst mezi řádky…
-        nebo spíš mezi píky?
-      </p>
+      <p>Monitor náhle znovu zabliká. Objeví se záznam z plynového chromatografu. Křivky na obrazovce poskakují, hodnoty se mění a systém stále opakuje:</p>
+      <span class="system-message">NESTABILITA ROSTE.</span>
+      <p>Teď rozhoduje rychlost, přesnost a schopnost číst mezi řádky… nebo spíš <strong>mezi píky?</strong>.</p>
+      <p><strong>Najdi ukryté indicie a získej třetí čtyřmístný kód.</strong></p>
     `
   },
 
@@ -124,22 +79,10 @@ const levels = [
     code: "2489",
     image: "obrazky/ukol4.jpg",
     text: `
-      <p>
-        Chromatogram na monitoru se zastaví a varovné hlášení ztichne.
-        V místnosti zavládne krátké ticho, přerušované jen slabým
-        hučením systému.
-      </p>
-
-      <p>
-        Víš, že ještě není konec. Tohle je jen klid před bouří…
-      </p>
-
-      <p>
-        <strong>
-          Všimneš si, že na nástěnce mezi ostatními poznámkami
-          a dokumenty je připnutá pohlednice.
-        </strong>
-      </p>
+     <p>Chromatogram se zastaví. Varovné hlášení na okamžik zmizí a v místnosti zavládne napjaté ticho.</p>
+      <p>Na nástěnce mezi poznámkami, plánky a starými dokumenty si všimneš pohlednice.</p>
+      <p>Jenže v NovaCore Research Labs není obyčejné vůbec nic.</p>
+      <p><strong>Prohlédni si pohlednici pozorně. Možná právě ona ukrývá další čtyřmístný kód.</strong></p>
     `
   },
 
@@ -150,25 +93,10 @@ const levels = [
     code: "1405",
     image: "obrazky/ukol5.jpg",
     text: `
-      <p>
-        Ani po zadání čtvrtého kódu se systém reaktoru nestabilizoval.
-        Je to jako zlý sen, ze kterého se nejde probudit.
-      </p>
-
-      <p>
-        Čeká Tě další úkol – tentokrát s periodickou soustavou prvků.
-        Známá, přehledná, bezbarvá…
-      </p>
-
-      <p>
-        Při bližším pohledu je jasné, že ne všechny značky prvků
-        jsou tak, jak mají být. A navíc v tabulce problikávají
-        červená políčka.
-      </p>
-
-      <p>
-        <strong>Vidíš v nich další čtyřmístný kód?</strong>
-      </p>
+     <p>Ani po zadání čtvrtého kódu se reaktor nestabilizoval. Systém se znovu otřese a na obrazovce se objeví periodická soustava prvků.</p>
+      <p>Známá. Přehledná. Bezbarvá.</p>
+      <p>Jenže při bližším pohledu zjistíš, že něco není v pořádku. Některé značky prvků vypadají podezřele a v tabulce problikávají červená políčka.</p>
+      <p><strong>Prozkoumej periodickou soustavu a zjisti pátý čtyřmístný kód.</strong></p>
     `
   },
 
@@ -179,29 +107,11 @@ const levels = [
     code: "3210",
     image: "obrazky/ukol6.jpg",
     text: `
-      <p>
-        Řídicí systém reaktoru se přepne do posledního nouzového režimu.
-      </p>
-
-      <span class="system-message">
-        FINÁLNÍ STABILIZAČNÍ SEKVENCE – MANUÁLNÍ NASTAVENÍ VYŽADOVÁNO
-      </span>
-
-      <p>
-        Na druhé obrazovce se objeví bludiště. Cesty jsou úzké,
-        slepé uličky neúprosné. Jen jedna trasa vede k cíli –
-        a pouze ta poskytne údaje potřebné k dokončení stabilizace
-        reaktoru.
-      </p>
-
-      <p>
-        <strong>
-          Na cestě najdeš různé druhy částic s různým nábojem
-          a ten Ti pomůže k poslednímu čtyřmístnému kódu.
-        </strong>
-      </p>
-
-      <p>⏱ Tik-tak. Reaktor čeká.</p>
+     <p>Řídicí systém reaktoru se přepíná do posledního nouzového režimu.</p>
+      <span class="system-message">FINÁLNÍ STABILIZAČNÍ SEKVENCE – MANUÁLNÍ NASTAVENÍ VYŽADOVÁNO</span>
+      <p>Na druhé obrazovce se spustí bludiště. Cesty jsou úzké, slepé uličky neúprosné a jen jedna trasa vede k cíli.</p>
+      <p>Na cestě potkáš různé částice. Některé elektrony přijaly, jiné je odevzdaly. Právě jejich náboj Ti pomůže získat poslední čtyřmístný kód.</p>
+      <p><strong>Tik-tak. Reaktor čeká.</strong></p>
     `
   }
 ];
