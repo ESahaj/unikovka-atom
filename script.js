@@ -1,155 +1,271 @@
-// SEM NAPIŠ SVŮJ E-MAIL
-const teacherEmail = "tvuj.email@skola.cz";
+/*
+  NovaCore Research Labs
+  Kompletní funkční skript.
 
-// ČASOVÝ LIMIT HRY
-const totalGameTime = 60 * 60;
+  Správné kódy:
+  1. 7204
+  2. 8324
+  3. 6867
+  4. 2489
+  5. 1405
+  6. 3210
 
-// TREST ZA ŠPATNÝ KÓD
-const penaltySeconds = 3 * 60;
+  Každý chybný pokus odečte 3 minuty.
+  E-mail příjemce se nikde v kódu neukládá.
+  Vyplňuje se až na konci hry.
+*/
 
-const introScreen = {
-  title: "Incident v NovaCore Research Labs",
-  badge: "Start mise",
-  image: "obrazky/uvod.jpg",
-  text: `
-    <p>Vítej v <strong>NovaCore Research Labs</strong> – tajném výzkumném centru, kde se pracuje na projektech, které mohou změnit svět.</p>
+"use strict";
 
-    <p>Dnes přicházíš jako nový člen expertního týmu. Inženýr Josef Barnabáš Tě provádí řídicím střediskem. Všude kolem blikají monitory, svítí kontrolky a z hlubin laboratoře se ozývá tiché hučení přístrojů.</p>
+/* =========================================================
+   NASTAVENÍ HRY
+   ========================================================= */
 
-    <p>Najednou se ozve ostrý výstražný tón.</p>
+const GAME_DURATION_SECONDS = 60 * 60;
+const WRONG_CODE_PENALTY_SECONDS = 3 * 60;
 
-    <span class="system-message">NESTABILITA REAKTORU ZJIŠTĚNA!</span>
-
-    <p>K restartu systému je potřeba získat <strong>šest čtyřmístných kódů</strong>. Každý z nich odemkne jednu bezpečnostní úroveň.</p>
-
-    <p>Na splnění mise máš <strong>60 minut</strong>. Za každý špatně zadaný kód systém odečte <strong>3 minuty</strong>.</p>
-
-    <p>Nejprve vyplň název týmu a jména hráčů. Potom můžeš spustit misi.</p>
-  `
-};
+/*
+  Názvy obrázků můžeš upravit podle své složky "obrazky".
+  Když některý obrázek neexistuje, stránka ho automaticky skryje
+  a hra bude dál normálně fungovat.
+*/
+const INTRO_IMAGE = "obrazky/uvod.jpg";
 
 const levels = [
   {
-    title: "Úkol 1: Rozmazané poznámky",
-    badge: "Úroveň 1",
+    number: 1,
+    badge: "Úroveň 1 z 6",
+    title: "První bezpečnostní úroveň",
     code: "7204",
     image: "obrazky/ukol1.jpg",
     text: `
-      <p>Červená světla se rozblikají a místností se rozezní varovné pípání. Lekneš se, prudce sebou trhneš a omylem převrhneš kelímek s kávou.</p>
-      <p>Káva se rozlije přímo na důležité poznámky ležící na stole. Některá slova jsou pořád čitelná, jiná se úplně rozmazala.</p>
-      <p><strong>Doplň chybějící slova a zjisti první čtyřmístný kód.</strong></p>
+      <p>
+        Jakmile se červená světla rozblikají a místností se rozezní
+        varovný pípající tón, lekneš se. Trhneš sebou a kávou poliješ
+        papíry ležící na stole.
+      </p>
+
+      <p>
+        Text se rozmaže – většina slov je sice stále čitelná,
+        některá už ale přečíst nejde. Je jen na Tobě, abys chybějící
+        slova doplnil.
+      </p>
+
+      <p>
+        <strong>
+          První čtyřmístný kód se skládá z číslic, které určují počet
+          konkrétních písmen ve všech zcela nečitelných slovech.
+        </strong>
+      </p>
+
+      <p>
+        Zadání správného kódu odemkne první bezpečnostní krok systému
+        a na chvíli ztiší alarmy…
+      </p>
     `
   },
+
   {
-    title: "Úkol 2: Zásobní lahve",
-    badge: "Úroveň 2",
+    number: 2,
+    badge: "Úroveň 2 z 6",
+    title: "Zásobní lahve",
     code: "8324",
     image: "obrazky/ukol2.jpg",
     text: `
-      <p>Alarmy sice na okamžik zeslábly, ale reaktor je stále nestabilní. Červená světla blikají pomaleji, zato pravidelně – jako odpočítávání.</p>
-      <p>Všimneš si poličky se zásobními lahvemi. Na každé z nich je název prvku.</p>
-      <p><strong>Prozkoumej názvy prvků na lahvích a najdi druhý přístupový kód.</strong></p>
+      <p>
+        Alarmy sice na okamžik ztichly, ale reaktor je stále nestabilní
+        a červená světla nyní blikají pomaleji, zato pravidelně.
+      </p>
+
+      <p>
+        Vzduch v místnosti je těžký, napětí by se dalo krájet
+        a Tvůj zrak spočine na zásobních lahvích postavených na poličce.
+      </p>
+
+      <span class="system-message">
+        PRVNÍ ÚROVEŇ PŘEKONÁNA – JE PŘIPRAVEN DALŠÍ ČTYŘMÍSTNÝ KÓD
+      </span>
     `
   },
+
   {
-    title: "Úkol 3: Chromatogram",
-    badge: "Úroveň 3",
+    number: 3,
+    badge: "Úroveň 3 z 6",
+    title: "Nestabilní chromatogram",
     code: "6867",
     image: "obrazky/ukol3.jpg",
     text: `
-      <p>Monitor náhle znovu zabliká. Objeví se záznam z plynového chromatografu. Křivky na obrazovce poskakují, hodnoty se mění a systém stále opakuje:</p>
-      <span class="system-message">NESTABILITA ROSTE.</span>
-      <p>Teď rozhoduje rychlost, přesnost a schopnost číst mezi řádky… nebo spíš <strong>mezi píky</strong>.</p>
-      <p><strong>Najdi ukryté indicie a získej třetí čtyřmístný kód.</strong></p>
+      <p>
+        Monitor náhle znovu zabliká a objeví se chromatogram
+        z plynového chromatografu, který se neustále aktualizuje.
+        Křivky poskakují, hodnoty se mění a systém varuje:
+      </p>
+
+      <span class="system-message">
+        NESTABILITA ROSTE
+      </span>
+
+      <p>
+        Každá chybná interpretace zvyšuje riziko selhání.
+        Každý nesprávný krok a každé špatné rozhodnutí posouvá
+        reaktor blíž ke kritické fázi.
+      </p>
+
+      <p>
+        <strong>Čas běží – každá vteřina se počítá!</strong>
+      </p>
+
+      <p>
+        Teď jde o rychlost, přesnost a schopnost číst mezi řádky…
+        nebo spíš mezi píky?
+      </p>
     `
   },
+
   {
-    title: "Úkol 4: Pohlednice",
-    badge: "Úroveň 4",
+    number: 4,
+    badge: "Úroveň 4 z 6",
+    title: "Záhadná pohlednice",
     code: "2489",
     image: "obrazky/ukol4.jpg",
     text: `
-      <p>Chromatogram se zastaví. Varovné hlášení na okamžik zmizí a v místnosti zavládne napjaté ticho.</p>
-      <p>Na nástěnce mezi poznámkami, plánky a starými dokumenty si všimneš pohlednice.</p>
-      <p>Jenže v NovaCore Research Labs není obyčejné vůbec nic.</p>
-      <p><strong>Prohlédni si pohlednici pozorně. Možná právě ona ukrývá další čtyřmístný kód.</strong></p>
+      <p>
+        Chromatogram na monitoru se zastaví a varovné hlášení ztichne.
+        V místnosti zavládne krátké ticho, přerušované jen slabým
+        hučením systému.
+      </p>
+
+      <p>
+        Víš, že ještě není konec. Tohle je jen klid před bouří…
+      </p>
+
+      <p>
+        <strong>
+          Všimneš si, že na nástěnce mezi ostatními poznámkami
+          a dokumenty je připnutá pohlednice.
+        </strong>
+      </p>
     `
   },
+
   {
-    title: "Úkol 5: Periodická soustava",
-    badge: "Úroveň 5",
+    number: 5,
+    badge: "Úroveň 5 z 6",
+    title: "Periodická soustava prvků",
     code: "1405",
     image: "obrazky/ukol5.jpg",
     text: `
-      <p>Ani po zadání čtvrtého kódu se reaktor nestabilizoval. Systém se znovu otřese a na obrazovce se objeví periodická soustava prvků.</p>
-      <p>Známá. Přehledná. Bezbarvá.</p>
-      <p>Jenže při bližším pohledu zjistíš, že něco není v pořádku. Některé značky prvků vypadají podezřele a v tabulce problikávají červená políčka.</p>
-      <p><strong>Prozkoumej periodickou soustavu a zjisti pátý čtyřmístný kód.</strong></p>
+      <p>
+        Ani po zadání čtvrtého kódu se systém reaktoru nestabilizoval.
+        Je to jako zlý sen, ze kterého se nejde probudit.
+      </p>
+
+      <p>
+        Čeká Tě další úkol – tentokrát s periodickou soustavou prvků.
+        Známá, přehledná, bezbarvá…
+      </p>
+
+      <p>
+        Při bližším pohledu je jasné, že ne všechny značky prvků
+        jsou tak, jak mají být. A navíc v tabulce problikávají
+        červená políčka.
+      </p>
+
+      <p>
+        <strong>Vidíš v nich další čtyřmístný kód?</strong>
+      </p>
     `
   },
+
   {
-    title: "Úkol 6: Hra atomů s elektrony",
-    badge: "Finální úroveň",
+    number: 6,
+    badge: "Úroveň 6 z 6",
+    title: "Finální stabilizační sekvence",
     code: "3210",
     image: "obrazky/ukol6.jpg",
     text: `
-      <p>Řídicí systém reaktoru se přepíná do posledního nouzového režimu.</p>
-      <span class="system-message">FINÁLNÍ STABILIZAČNÍ SEKVENCE – MANUÁLNÍ NASTAVENÍ VYŽADOVÁNO</span>
-      <p>Na druhé obrazovce se spustí bludiště. Cesty jsou úzké, slepé uličky neúprosné a jen jedna trasa vede k cíli.</p>
-      <p>Na cestě potkáš různé částice. Některé elektrony přijaly, jiné je odevzdaly. Právě jejich náboj Ti pomůže získat poslední čtyřmístný kód.</p>
-      <p><strong>Tik-tak. Reaktor čeká.</strong></p>
+      <p>
+        Řídicí systém reaktoru se přepne do posledního nouzového režimu.
+      </p>
+
+      <span class="system-message">
+        FINÁLNÍ STABILIZAČNÍ SEKVENCE – MANUÁLNÍ NASTAVENÍ VYŽADOVÁNO
+      </span>
+
+      <p>
+        Na druhé obrazovce se objeví bludiště. Cesty jsou úzké,
+        slepé uličky neúprosné. Jen jedna trasa vede k cíli –
+        a pouze ta poskytne údaje potřebné k dokončení stabilizace
+        reaktoru.
+      </p>
+
+      <p>
+        <strong>
+          Na cestě najdeš různé druhy částic s různým nábojem
+          a ten Ti pomůže k poslednímu čtyřmístnému kódu.
+        </strong>
+      </p>
+
+      <p>⏱ Tik-tak. Reaktor čeká.</p>
     `
   }
 ];
 
-const finalScreen = {
-  title: "Mise splněna!",
-  badge: "Reaktor stabilizován",
-  image: "obrazky/uspech.jpg",
-  text: `
-    <p>Zadáváš poslední čtyřmístný kód.</p>
-    <p>Na okamžik se nic neděje.</p>
-    <p>Pak alarmy utichnou. Červená světla pohasnou a hodnoty na monitorech se pomalu vracejí do zelených zón.</p>
-    <span class="system-message">STABILIZACE DOKONČENA<br>NOUZOVÝ REŽIM UKONČEN</span>
-    <p><strong>Reaktor je zachráněn. Vítej v NovaCore Research Labs!</strong></p>
-  `
-};
+const introText = `
+  <p>
+    Vítej v <strong>NovaCore Research Labs</strong> – jednom
+    z nejutajenějších a nejmodernějších výzkumných center na světě.
+  </p>
 
-const timeOutScreen = {
-  title: "Čas vypršel!",
-  badge: "Mise neúspěšná",
-  image: "obrazky/konec-casu.jpg",
-  text: `
-    <p>Časový limit byl vyčerpán.</p>
-    <p>Reaktor se nepodařilo stabilizovat včas a nouzový systém hru ukončil.</p>
-    <span class="system-message">NOUZOVÝ PROTOKOL SELHAL</span>
-    <p><strong>Laboratoř potřebuje nový pokus.</strong></p>
-  `
-};
+  <p>
+    Dnes jsi tady proto, že chceš nastoupit jako nový člen expertního
+    týmu. Inženýr Josef Barnabáš Tě právě provádí řídicím střediskem.
+    Kolem sebe vidíš množství monitorů, blikajících světel a slyšíš
+    tlumené hučení počítačů…
+  </p>
 
-let currentLevel = 0;
-let timeLeft = totalGameTime;
-let timerInterval = null;
-let gameRunning = false;
-let gameOver = false;
-let waitingForNextLevel = false;
+  <p><strong>Pak to ale přijde!</strong></p>
 
-let gameStartTime = null;
-let levelStartTime = null;
+  <p>
+    Senzory náhle zaznamenají neobvyklou nestabilitu v reaktoru.
+    Alarmy se spustí jeden po druhém a rozsvítí se všechna červená
+    kontrolní světla.
+  </p>
 
-let teamData = {
-  teamName: "",
-  players: []
-};
+  <span class="system-message">
+    REAKTOR NYNÍ PŘECHÁZÍ DO KRITICKÉ FÁZE
+  </span>
 
-let stats = [];
+  <p>
+    Jediný způsob, jak systém restartovat a reaktor zachránit,
+    je znovu nadefinovat šest čtyřmístných přístupových kódů.
+  </p>
 
-const title = document.getElementById("title");
-const text = document.getElementById("text");
+  <p>
+    Každý chybný kód odečte <strong>3 minuty</strong>.
+    Na celou misi máš <strong>60 minut</strong>.
+  </p>
+
+  <p>
+    Dokážeš laboratoř zachránit dřív, než dojde ke katastrofě?
+  </p>
+`;
+
+/* =========================================================
+   PRVKY STRÁNKY
+   ========================================================= */
+
 const levelBadge = document.getElementById("levelBadge");
+const timerBox = document.getElementById("timerBox");
+const timerElement = document.getElementById("timer");
+const titleElement = document.getElementById("title");
+
+const speakerButton = document.getElementById("speakerButton");
+const speakerStatus = document.getElementById("speakerStatus");
 
 const imageBox = document.getElementById("imageBox");
 const levelImage = document.getElementById("levelImage");
+const textElement = document.getElementById("text");
 
 const teamForm = document.getElementById("teamForm");
 const teamNameInput = document.getElementById("teamName");
@@ -160,545 +276,768 @@ const playerInputs = [
   document.getElementById("player4")
 ];
 const formMessage = document.getElementById("formMessage");
-
 const startButton = document.getElementById("startButton");
+
 const codeBox = document.getElementById("codeBox");
 const codeInput = document.getElementById("codeInput");
 const checkButton = document.getElementById("checkButton");
 const message = document.getElementById("message");
-const restartButton = document.getElementById("restartButton");
-
-const timer = document.getElementById("timer");
-const timerBox = document.getElementById("timerBox");
 
 const resultBox = document.getElementById("resultBox");
 const resultButtons = document.getElementById("resultButtons");
+const recipientEmail = document.getElementById("recipientEmail");
+const resultActionMessage = document.getElementById("resultActionMessage");
 const copyButton = document.getElementById("copyButton");
 const emailButton = document.getElementById("emailButton");
-const speakerButton = document.getElementById("speakerButton");
-const speakerStatus = document.getElementById("speakerStatus");
+const restartButton = document.getElementById("restartButton");
 
-const SPEAKER_BUTTON_TEXT = "poslechni si";
-const SPEAKER_STOP_TEXT = "zastavit hlas";
+/* =========================================================
+   STAV HRY
+   ========================================================= */
 
-let selectedCzechVoice = null;
-let currentlySpeaking = false;
+let currentLevelIndex = -1;
+let secondsRemaining = GAME_DURATION_SECONDS;
+let timerInterval = null;
+let gameStartedAtMs = null;
+let levelStartedAtMs = null;
+let gameFinished = false;
 
-function showImage(imagePath) {
-  if (imagePath) {
-    levelImage.src = imagePath;
-    imageBox.classList.remove("hidden");
-  } else {
-    imageBox.classList.add("hidden");
-  }
+let teamData = {
+  name: "",
+  players: []
+};
+
+const stats = levels.map((level) => ({
+  level: level.number,
+  title: level.title,
+  errors: 0,
+  timeSeconds: 0,
+  solved: false
+}));
+
+/* =========================================================
+   POMOCNÉ FUNKCE
+   ========================================================= */
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
-levelImage.addEventListener("error", function () {
-  imageBox.classList.add("hidden");
-});
-
-function loadCzechVoice() {
-  if (!("speechSynthesis" in window)) {
-    return;
-  }
-
-  const voices = window.speechSynthesis.getVoices();
-
-  // Prohlížeč nabízí jen hlasy nainstalované v zařízení.
-  // Proto hlas nevybíráme podle pořadí, ale bodujeme ho:
-  // 1) přednost má čeština, 2) přednost má mužsky znějící název hlasu.
-  const maleVoiceName = /\b(jakub|jan|pavel|petr|martin|miroslav|zden[eě]k|v[ií]t|anton[ií]n|ond[rř]ej|ji[rř][ií]|milo[sš]|male|man)\b/i;
-  const femaleVoiceName = /\b(zuzana|iveta|vlasta|milena|tereza|karolina|karol[ií]na|female|woman)\b/i;
-
-  function scoreVoice(voice) {
-    const lang = (voice.lang || "").toLowerCase();
-    const name = voice.name || "";
-    let score = 0;
-
-    if (lang === "cs-cz") score += 120;
-    else if (lang.startsWith("cs")) score += 100;
-    else if (/czech|cesky|česky/i.test(name)) score += 80;
-
-    if (maleVoiceName.test(name)) score += 90;
-    if (femaleVoiceName.test(name)) score -= 70;
-    if (/google|microsoft|apple|siri/i.test(name)) score += 8;
-    if (voice.localService) score += 4;
-
-    return score;
-  }
-
-  selectedCzechVoice = voices
-    .slice()
-    .sort(function (a, b) {
-      return scoreVoice(b) - scoreVoice(a);
-    })[0] || null;
-}
-
-function cleanTextForSpeaker(rawText) {
-  return rawText
+function stripHtml(html) {
+  const temporaryElement = document.createElement("div");
+  temporaryElement.innerHTML = html;
+  return temporaryElement.textContent
     .replace(/\s+/g, " ")
-    .replace(/NovaCore/g, "Nova Kór")
-    .replace(/Research Labs/g, "Research Labs")
-    .replace(/⏱/g, "Čas běží.")
     .trim();
 }
 
-function getTextForSpeaker() {
-  return cleanTextForSpeaker(title.textContent + ". " + text.innerText);
+function formatTime(totalSeconds) {
+  const safeSeconds = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const seconds = safeSeconds % 60;
+
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-function resetSpeakerButton() {
-  currentlySpeaking = false;
-  speakerButton.classList.remove("speaking");
-  speakerButton.textContent = SPEAKER_BUTTON_TEXT;
-  speakerStatus.textContent = "";
+function formatDurationWords(totalSeconds) {
+  const safeSeconds = Math.max(0, Math.floor(totalSeconds));
+  const minutes = Math.floor(safeSeconds / 60);
+  const seconds = safeSeconds % 60;
+
+  if (minutes === 0) {
+    return `${seconds} s`;
+  }
+
+  return `${minutes} min ${seconds} s`;
 }
 
-function stopSpeaker() {
-  if ("speechSynthesis" in window) {
-    window.speechSynthesis.cancel();
+function setMessage(element, text, type = "") {
+  element.textContent = text;
+  element.className = "message";
+
+  if (type) {
+    element.classList.add(type);
   }
-
-  resetSpeakerButton();
-}
-
-function speakCurrentScreen() {
-  if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
-    speakerStatus.textContent = "Hlasové čtení tento prohlížeč nepodporuje.";
-    return;
-  }
-
-  if (window.speechSynthesis.speaking || currentlySpeaking) {
-    stopSpeaker();
-    return;
-  }
-
-  loadCzechVoice();
-
-  const textToRead = getTextForSpeaker();
-
-  if (!textToRead) {
-    speakerStatus.textContent = "Na této obrazovce není co přečíst.";
-    return;
-  }
-
-  const utterance = new SpeechSynthesisUtterance(textToRead);
-  utterance.lang = "cs-CZ";
-
-  // Nižší výška hlasu + pomalejší tempo působí tajemněji a více „mužsky“.
-  // Když zařízení nemá český mužský hlas, alespoň ztišíme výšku hlasu.
-  utterance.rate = 0.78;
-  utterance.pitch = 0.45;
-  utterance.volume = 1;
-
-  if (selectedCzechVoice) {
-    utterance.voice = selectedCzechVoice;
-  }
-
-  utterance.onstart = function () {
-    currentlySpeaking = true;
-    speakerButton.classList.add("speaking");
-    speakerButton.textContent = SPEAKER_STOP_TEXT;
-    speakerStatus.textContent = "Systém předčítá hlášení…";
-  };
-
-  utterance.onend = resetSpeakerButton;
-  utterance.onerror = function () {
-    resetSpeakerButton();
-    speakerStatus.textContent = "Čtení se nepodařilo spustit.";
-  };
-
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
-}
-
-if ("speechSynthesis" in window) {
-  loadCzechVoice();
-  window.speechSynthesis.onvoiceschanged = loadCzechVoice;
-} else {
-  speakerButton.disabled = true;
-  speakerButton.textContent = "hlas není podporován";
-}
-
-speakerButton.addEventListener("click", speakCurrentScreen);
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-
-  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
 }
 
 function updateTimerDisplay() {
-  timer.textContent = formatTime(timeLeft);
+  timerElement.textContent = formatTime(secondsRemaining);
 
   timerBox.classList.remove("warning", "danger");
 
-  if (timeLeft <= 5 * 60) {
+  if (secondsRemaining <= 5 * 60) {
     timerBox.classList.add("danger");
-  } else if (timeLeft <= 15 * 60) {
+  } else if (secondsRemaining <= 15 * 60) {
     timerBox.classList.add("warning");
   }
 }
 
-function startTimer() {
-  clearInterval(timerInterval);
-  updateTimerDisplay();
+function setImage(source, alternativeText) {
+  levelImage.onerror = null;
 
-  timerInterval = setInterval(function () {
-    if (!gameRunning || gameOver) {
-      return;
-    }
-
-    timeLeft--;
-
-    if (timeLeft <= 0) {
-      timeLeft = 0;
-      updateTimerDisplay();
-      endGameByTime();
-      return;
-    }
-
-    updateTimerDisplay();
-  }, 1000);
-}
-
-function subtractTimeForWrongCode() {
-  timeLeft -= penaltySeconds;
-
-  if (timeLeft <= 0) {
-    timeLeft = 0;
-    updateTimerDisplay();
-    endGameByTime();
-  } else {
-    updateTimerDisplay();
+  if (!source) {
+    levelImage.removeAttribute("src");
+    imageBox.classList.add("hidden");
+    return;
   }
+
+  levelImage.alt = alternativeText;
+  levelImage.src = source;
+
+  imageBox.classList.remove("hidden");
+
+  levelImage.onerror = () => {
+    imageBox.classList.add("hidden");
+  };
 }
+
+function scrollToTopOfCard() {
+  document.querySelector(".card").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+/* =========================================================
+   ÚVOD A SPUŠTĚNÍ
+   ========================================================= */
 
 function showIntro() {
-  stopSpeaker();
-  clearInterval(timerInterval);
+  levelBadge.textContent = "Start mise";
+  titleElement.textContent = "NovaCore Research Labs";
+  textElement.innerHTML = introText;
 
-  currentLevel = 0;
-  timeLeft = totalGameTime;
-  gameRunning = false;
-  gameOver = false;
-  waitingForNextLevel = false;
-  gameStartTime = null;
-  levelStartTime = null;
-
-  stats = levels.map(function (level, index) {
-    return {
-      number: index + 1,
-      title: level.title,
-      duration: 0,
-      errors: 0,
-      completed: false
-    };
-  });
-
-  updateTimerDisplay();
-
-  title.textContent = introScreen.title;
-  levelBadge.textContent = introScreen.badge;
-  text.innerHTML = introScreen.text;
-  showImage(introScreen.image);
+  setImage(INTRO_IMAGE, "NovaCore Research Labs");
 
   teamForm.classList.remove("hidden");
   startButton.classList.remove("hidden");
 
   codeBox.classList.add("hidden");
-  restartButton.classList.add("hidden");
   resultBox.classList.add("hidden");
   resultButtons.classList.add("hidden");
+  restartButton.classList.add("hidden");
 
-  message.textContent = "";
-  formMessage.textContent = "";
+  updateTimerDisplay();
 }
 
 function readTeamData() {
   const teamName = teamNameInput.value.trim();
   const players = playerInputs
-    .map(function (input) {
-      return input.value.trim();
-    })
-    .filter(function (name) {
-      return name !== "";
-    });
+    .map((input) => input.value.trim())
+    .filter(Boolean);
+
+  if (!teamName) {
+    setMessage(formMessage, "Vyplň název týmu.", "error");
+    teamNameInput.focus();
+    return null;
+  }
+
+  if (players.length === 0) {
+    setMessage(
+      formMessage,
+      "Vyplň alespoň jedno jméno hráče.",
+      "error"
+    );
+    playerInputs[0].focus();
+    return null;
+  }
 
   return {
-    teamName: teamName,
-    players: players
+    name: teamName,
+    players
   };
 }
 
 function startGame() {
-  teamData = readTeamData();
-
-  if (teamData.teamName === "") {
-    formMessage.textContent = "Nejprve napište název týmu.";
-    formMessage.className = "message error";
-    teamNameInput.focus();
+  if (timerInterval || gameFinished) {
     return;
   }
 
-  currentLevel = 0;
-  timeLeft = totalGameTime;
-  gameRunning = true;
-  gameOver = false;
-  waitingForNextLevel = false;
-  gameStartTime = Date.now();
+  const enteredTeamData = readTeamData();
 
-  updateTimerDisplay();
-  showLevel();
-  startTimer();
-}
+  if (!enteredTeamData) {
+    return;
+  }
 
-function showLevel() {
-  stopSpeaker();
-  const level = levels[currentLevel];
-
-  waitingForNextLevel = false;
-  levelStartTime = Date.now();
-
-  title.textContent = level.title;
-  levelBadge.textContent = level.badge;
-  text.innerHTML = level.text;
-  showImage(level.image);
+  teamData = enteredTeamData;
+  setMessage(formMessage, "");
 
   teamForm.classList.add("hidden");
   startButton.classList.add("hidden");
-  resultBox.classList.add("hidden");
-  resultButtons.classList.add("hidden");
 
-  codeInput.value = "";
-  codeInput.disabled = false;
-  checkButton.disabled = false;
+  secondsRemaining = GAME_DURATION_SECONDS;
+  gameStartedAtMs = Date.now();
+  gameFinished = false;
 
-  message.textContent = "";
-  message.className = "message";
+  timerInterval = window.setInterval(() => {
+    secondsRemaining -= 1;
+    updateTimerDisplay();
 
-  codeBox.classList.remove("hidden");
-  restartButton.classList.add("hidden");
+    if (secondsRemaining <= 0) {
+      secondsRemaining = 0;
+      updateTimerDisplay();
+      finishGame(false);
+    }
+  }, 1000);
 
-  setTimeout(function () {
-    codeInput.focus();
-  }, 100);
+  showLevel(0);
 }
 
-function completeCurrentLevel() {
-  const secondsSpent = Math.round((Date.now() - levelStartTime) / 1000);
+/* =========================================================
+   ÚROVNĚ A KÓDY
+   ========================================================= */
 
-  stats[currentLevel].duration += secondsSpent;
-  stats[currentLevel].completed = true;
+function showLevel(index) {
+  stopSpeaking();
+
+  currentLevelIndex = index;
+  levelStartedAtMs = Date.now();
+
+  const level = levels[currentLevelIndex];
+
+  levelBadge.textContent = level.badge;
+  titleElement.textContent = level.title;
+  textElement.innerHTML = level.text;
+
+  setImage(
+    level.image,
+    `Obrázek k úrovni ${level.number}`
+  );
+
+  codeInput.value = "";
+  checkButton.disabled = false;
+  codeInput.disabled = false;
+
+  setMessage(message, "");
+
+  codeBox.classList.remove("hidden");
+  resultBox.classList.add("hidden");
+  resultButtons.classList.add("hidden");
+  restartButton.classList.add("hidden");
+
+  window.setTimeout(() => codeInput.focus(), 100);
+  scrollToTopOfCard();
+}
+
+function recordCurrentLevelTime() {
+  if (currentLevelIndex < 0 || !levelStartedAtMs) {
+    return;
+  }
+
+  const elapsedSeconds = Math.max(
+    0,
+    Math.round((Date.now() - levelStartedAtMs) / 1000)
+  );
+
+  stats[currentLevelIndex].timeSeconds += elapsedSeconds;
+  levelStartedAtMs = null;
 }
 
 function checkCode() {
-  if (!gameRunning || gameOver || waitingForNextLevel) {
+  if (
+    gameFinished ||
+    currentLevelIndex < 0 ||
+    currentLevelIndex >= levels.length
+  ) {
     return;
   }
 
-  const enteredCode = codeInput.value.trim();
-  const correctCode = levels[currentLevel].code;
+  const enteredCode = codeInput.value.replace(/\D/g, "");
+  codeInput.value = enteredCode;
 
   if (enteredCode.length !== 4) {
-    message.textContent = "Kód musí mít přesně 4 číslice.";
-    message.className = "message info";
+    setMessage(
+      message,
+      "Kód musí obsahovat přesně čtyři číslice.",
+      "error"
+    );
     codeInput.focus();
     return;
   }
 
-  if (enteredCode === correctCode) {
-    waitingForNextLevel = true;
-    completeCurrentLevel();
+  const level = levels[currentLevelIndex];
 
-    message.textContent = "Kód přijat. Přístupová úroveň odemčena.";
-    message.className = "message ok";
+  if (enteredCode === level.code) {
+    recordCurrentLevelTime();
 
-    codeInput.disabled = true;
+    stats[currentLevelIndex].solved = true;
+
+    setMessage(
+      message,
+      "Správný kód. Bezpečnostní úroveň byla odemčena.",
+      "ok"
+    );
+
     checkButton.disabled = true;
+    codeInput.disabled = true;
 
-    setTimeout(function () {
-      currentLevel++;
-
-      if (currentLevel < levels.length) {
-        showLevel();
+    window.setTimeout(() => {
+      if (currentLevelIndex === levels.length - 1) {
+        finishGame(true);
       } else {
-        showFinalScreen();
+        showLevel(currentLevelIndex + 1);
       }
-    }, 1000);
+    }, 900);
 
-  } else {
-    stats[currentLevel].errors++;
-    subtractTimeForWrongCode();
+    return;
+  }
 
-    if (gameOver) {
-      return;
-    }
+  stats[currentLevelIndex].errors += 1;
 
-    message.textContent = "Kód není správný. Systém odečetl 3 minuty. Zkus to znovu.";
-    message.className = "message error";
+  secondsRemaining = Math.max(
+    0,
+    secondsRemaining - WRONG_CODE_PENALTY_SECONDS
+  );
 
-    codeInput.value = "";
-    codeInput.focus();
+  updateTimerDisplay();
+
+  setMessage(
+    message,
+    "Nesprávný kód. Systém odečetl 3 minuty.",
+    "error"
+  );
+
+  codeInput.select();
+
+  if (secondsRemaining <= 0) {
+    finishGame(false);
   }
 }
 
-function showFinalScreen() {
-  stopSpeaker();
-  gameRunning = false;
-  gameOver = true;
-  clearInterval(timerInterval);
-
-  title.textContent = finalScreen.title;
-  levelBadge.textContent = finalScreen.badge;
-  text.innerHTML = finalScreen.text;
-  showImage(finalScreen.image);
-
-  codeBox.classList.add("hidden");
-  restartButton.classList.remove("hidden");
-
-  showResults("Mise splněna");
-}
-
-function endGameByTime() {
-  stopSpeaker();
-  if (levelStartTime && currentLevel < stats.length && !stats[currentLevel].completed) {
-    const secondsSpent = Math.round((Date.now() - levelStartTime) / 1000);
-    stats[currentLevel].duration += secondsSpent;
-  }
-
-  gameRunning = false;
-  gameOver = true;
-  clearInterval(timerInterval);
-
-  title.textContent = timeOutScreen.title;
-  levelBadge.textContent = timeOutScreen.badge;
-  text.innerHTML = timeOutScreen.text;
-  showImage(timeOutScreen.image);
-
-  codeBox.classList.add("hidden");
-  restartButton.classList.remove("hidden");
-
-  showResults("Čas vypršel");
-}
+/* =========================================================
+   VÝSLEDKY
+   ========================================================= */
 
 function getTotalErrors() {
-  return stats.reduce(function (sum, item) {
-    return sum + item.errors;
-  }, 0);
+  return stats.reduce((sum, item) => sum + item.errors, 0);
 }
 
-function getPlayedTime() {
-  return totalGameTime - timeLeft;
+function getPlayedSeconds() {
+  if (!gameStartedAtMs) {
+    return 0;
+  }
+
+  return Math.max(
+    0,
+    Math.round((Date.now() - gameStartedAtMs) / 1000)
+  );
 }
 
-function createResultText(status) {
-  let playersText = teamData.players.length > 0
-    ? teamData.players.join(", ")
-    : "neuvedeno";
+function buildResultRows() {
+  return stats.map((item) => {
+    const status = item.solved ? "Splněno" : "Nesplněno";
 
-  let result = "";
-  result += "Výsledek únikové hry – NovaCore Research Labs\n";
-  result += "---------------------------------------------\n";
-  result += "Stav: " + status + "\n";
-  result += "Tým: " + teamData.teamName + "\n";
-  result += "Hráči: " + playersText + "\n\n";
-  result += "Celkový čas hry: " + formatTime(getPlayedTime()) + "\n";
-  result += "Zbývající čas: " + formatTime(timeLeft) + "\n";
-  result += "Chybné pokusy celkem: " + getTotalErrors() + "\n\n";
-
-  stats.forEach(function (item) {
-    result += "Úkol " + item.number + ": ";
-    result += formatTime(item.duration);
-    result += ", chyby: " + item.errors;
-    result += ", stav: " + (item.completed ? "splněno" : "nesplněno");
-    result += "\n";
-  });
-
-  return result;
-}
-
-function showResults(status) {
-  const playersText = teamData.players.length > 0
-    ? teamData.players.join(", ")
-    : "neuvedeno";
-
-  let tableRows = "";
-
-  stats.forEach(function (item) {
-    tableRows += `
+    return `
       <tr>
-        <td>Úkol ${item.number}</td>
-        <td>${formatTime(item.duration)}</td>
+        <td>${item.level}</td>
+        <td>${escapeHtml(item.title)}</td>
+        <td>${formatDurationWords(item.timeSeconds)}</td>
         <td>${item.errors}</td>
-        <td>${item.completed ? "splněno" : "nesplněno"}</td>
+        <td>${status}</td>
       </tr>
     `;
+  }).join("");
+}
+
+function createResultText(success) {
+  const resultState = success
+    ? "REAKTOR STABILIZOVÁN"
+    : "MISE NEDOKONČENA";
+
+  const lines = [
+    "NovaCore Research Labs – výsledek únikové hry",
+    "",
+    `Výsledek: ${resultState}`,
+    `Tým: ${teamData.name}`,
+    `Hráči: ${teamData.players.join(", ")}`,
+    `Skutečná délka hry: ${formatDurationWords(getPlayedSeconds())}`,
+    `Čas zbývající na odpočtu: ${formatTime(secondsRemaining)}`,
+    `Celkový počet chybných kódů: ${getTotalErrors()}`,
+    "",
+    "Jednotlivé úrovně:"
+  ];
+
+  stats.forEach((item) => {
+    lines.push(
+      `${item.level}. ${item.title} – ` +
+      `čas ${formatDurationWords(item.timeSeconds)}, ` +
+      `chyby ${item.errors}, ` +
+      `${item.solved ? "splněno" : "nesplněno"}`
+    );
   });
 
-  resultBox.innerHTML = `
-    <h2>Závěrečný protokol</h2>
+  return lines.join("\n");
+}
 
+function finishGame(success) {
+  if (gameFinished) {
+    return;
+  }
+
+  gameFinished = true;
+
+  if (timerInterval) {
+    window.clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  stopSpeaking();
+  recordCurrentLevelTime();
+
+  codeBox.classList.add("hidden");
+  imageBox.classList.add("hidden");
+
+  levelBadge.textContent = success
+    ? "Mise splněna"
+    : "Konec mise";
+
+  titleElement.textContent = success
+    ? "Reaktor je zachráněn!"
+    : "Čas vypršel";
+
+  textElement.innerHTML = success
+    ? `
+      <p>
+        Jakmile zadáš poslední čtyřmístný kód, alarmy okamžitě utichnou.
+        Červená světla pohasnou a hodnoty reaktoru se postupně vracejí
+        do zelených zón.
+      </p>
+
+      <span class="system-message">
+        STABILIZACE DOKONČENA – NOUZOVÝ REŽIM UKONČEN
+      </span>
+
+      <p>
+        Reaktor je zachráněn. A Ty už víš, že tohle nebyl obyčejný
+        pracovní pohovor!
+      </p>
+
+      <p><strong>Vítej v NovaCore Research Labs :-)</strong></p>
+    `
+    : `
+      <span class="system-message">
+        KRITICKÝ ČASOVÝ LIMIT BYL VYČERPÁN
+      </span>
+
+      <p>
+        Mise tentokrát nebyla dokončena. Výsledek si přesto můžeš
+        zkopírovat nebo odeslat e-mailem.
+      </p>
+    `;
+
+  const teamName = escapeHtml(teamData.name);
+  const players = escapeHtml(teamData.players.join(", "));
+  const totalErrors = getTotalErrors();
+
+  resultBox.innerHTML = `
     <div class="result-summary">
-      <strong>Stav:</strong> ${status}<br>
-      <strong>Tým:</strong> ${teamData.teamName}<br>
-      <strong>Hráči:</strong> ${playersText}<br>
-      <strong>Celkový čas hry:</strong> ${formatTime(getPlayedTime())}<br>
-      <strong>Zbývající čas:</strong> ${formatTime(timeLeft)}<br>
-      <strong>Chybné pokusy celkem:</strong> ${getTotalErrors()}
+      <strong>Tým:</strong> ${teamName}<br>
+      <strong>Hráči:</strong> ${players}<br>
+      <strong>Skutečná délka hry:</strong>
+      ${formatDurationWords(getPlayedSeconds())}<br>
+      <strong>Zbývající čas:</strong> ${formatTime(secondsRemaining)}<br>
+      <strong>Celkový počet chybných kódů:</strong> ${totalErrors}
     </div>
 
-    <table class="result-table">
-      <thead>
-        <tr>
-          <th>Úkol</th>
-          <th>Čas řešení</th>
-          <th>Chyby</th>
-          <th>Stav</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${tableRows}
-      </tbody>
-    </table>
+    <div class="result-table-wrap">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>Úroveň</th>
+            <th>Úkol</th>
+            <th>Čas řešení</th>
+            <th>Chyby</th>
+            <th>Stav</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${buildResultRows()}
+        </tbody>
+      </table>
+    </div>
   `;
+
+  resultBox.dataset.resultSuccess = String(success);
 
   resultBox.classList.remove("hidden");
   resultButtons.classList.remove("hidden");
+  restartButton.classList.remove("hidden");
 
-  const resultText = createResultText(status);
+  recipientEmail.value = "";
+  setMessage(resultActionMessage, "");
 
-  copyButton.onclick = function () {
-    navigator.clipboard.writeText(resultText).then(function () {
-      copyButton.textContent = "Výsledek zkopírován";
-      setTimeout(function () {
-        copyButton.textContent = "Zkopírovat výsledek";
-      }, 2000);
-    });
-  };
-
-  emailButton.onclick = function () {
-    const subject = "Výsledek únikové hry – " + teamData.teamName;
-    const mailtoLink =
-      "mailto:" + encodeURIComponent(teacherEmail) +
-      "?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(resultText);
-
-    window.location.href = mailtoLink;
-  };
+  scrollToTopOfCard();
 }
 
+/* =========================================================
+   KOPÍROVÁNÍ A E-MAIL
+   ========================================================= */
+
+async function copyResult() {
+  const success = resultBox.dataset.resultSuccess === "true";
+  const resultText = createResultText(success);
+
+  try {
+    await navigator.clipboard.writeText(resultText);
+
+    setMessage(
+      resultActionMessage,
+      "Výsledek byl zkopírován.",
+      "ok"
+    );
+  } catch (error) {
+    const temporaryTextarea = document.createElement("textarea");
+    temporaryTextarea.value = resultText;
+    temporaryTextarea.setAttribute("readonly", "");
+    temporaryTextarea.style.position = "fixed";
+    temporaryTextarea.style.opacity = "0";
+
+    document.body.appendChild(temporaryTextarea);
+    temporaryTextarea.select();
+
+    const copied = document.execCommand("copy");
+    temporaryTextarea.remove();
+
+    setMessage(
+      resultActionMessage,
+      copied
+        ? "Výsledek byl zkopírován."
+        : "Výsledek se nepodařilo zkopírovat.",
+      copied ? "ok" : "error"
+    );
+  }
+}
+
+function sendResultByEmail() {
+  const recipient = recipientEmail.value.trim();
+
+  setMessage(resultActionMessage, "");
+
+  if (!recipient) {
+    setMessage(
+      resultActionMessage,
+      "Nejprve vyplň e-mailovou adresu příjemce.",
+      "error"
+    );
+    recipientEmail.focus();
+    return;
+  }
+
+  if (!recipientEmail.checkValidity()) {
+    setMessage(
+      resultActionMessage,
+      "Zadej platnou e-mailovou adresu.",
+      "error"
+    );
+    recipientEmail.focus();
+    return;
+  }
+
+  const success = resultBox.dataset.resultSuccess === "true";
+  const resultText = createResultText(success);
+
+  const subject = encodeURIComponent(
+    `Výsledek únikové hry – ${teamData.name}`
+  );
+
+  const body = encodeURIComponent(resultText);
+
+  /*
+    Adresa příjemce pochází pouze z políčka na konci hry.
+    Žádný konkrétní e-mail není uložen ve zdrojovém kódu.
+  */
+  window.location.href =
+    `mailto:${recipient}?subject=${subject}&body=${body}`;
+}
+
+/* =========================================================
+   HLASOVÉ ČTENÍ
+   ========================================================= */
+
+function getAvailableVoices() {
+  if (!("speechSynthesis" in window)) {
+    return [];
+  }
+
+  return window.speechSynthesis.getVoices();
+}
+
+function chooseCzechVoice() {
+  const voices = getAvailableVoices();
+
+  if (voices.length === 0) {
+    return null;
+  }
+
+  const czechVoices = voices.filter((voice) =>
+    voice.lang.toLowerCase().startsWith("cs")
+  );
+
+  const candidates = czechVoices.length > 0
+    ? czechVoices
+    : voices;
+
+  /*
+    Prohlížeče nemají jednotné názvy hlasů.
+    Zvýhodníme názvy, které často označují mužské hlasy,
+    ale skript zůstane funkční i bez nich.
+  */
+  const preferredNameParts = [
+    "male",
+    "muž",
+    "daniel",
+    "zdenek",
+    "zdeněk",
+    "jakub",
+    "ondrej",
+    "ondřej",
+    "petr",
+    "tomas",
+    "tomáš"
+  ];
+
+  const preferredVoice = candidates.find((voice) => {
+    const lowerName = voice.name.toLowerCase();
+
+    return preferredNameParts.some((part) =>
+      lowerName.includes(part)
+    );
+  });
+
+  return preferredVoice || candidates[0];
+}
+
+function stopSpeaking() {
+  if (!("speechSynthesis" in window)) {
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  speakerButton.classList.remove("speaking");
+  speakerButton.textContent = "poslechni si";
+  speakerStatus.textContent = "";
+}
+
+function speakCurrentScreen() {
+  if (!("speechSynthesis" in window)) {
+    setMessage(
+      resultActionMessage,
+      "Tento prohlížeč hlasové čtení nepodporuje.",
+      "error"
+    );
+    return;
+  }
+
+  if (window.speechSynthesis.speaking) {
+    stopSpeaking();
+    return;
+  }
+
+  const spokenText = [
+    titleElement.textContent,
+    stripHtml(textElement.innerHTML)
+  ]
+    .filter(Boolean)
+    .join(". ");
+
+  if (!spokenText.trim()) {
+    speakerStatus.textContent = "Na této obrazovce není co přečíst.";
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(spokenText);
+  const chosenVoice = chooseCzechVoice();
+
+  if (chosenVoice) {
+    utterance.voice = chosenVoice;
+    utterance.lang = chosenVoice.lang;
+  } else {
+    utterance.lang = "cs-CZ";
+  }
+
+  /*
+    Nižší výška hlasu a lehce pomalejší tempo vytvoří
+    tajemnější počítačový dojem. Skutečný zvuk se může lišit
+    podle hlasů nainstalovaných v zařízení.
+  */
+  utterance.pitch = 0.72;
+  utterance.rate = 0.88;
+  utterance.volume = 1;
+
+  utterance.onstart = () => {
+    speakerButton.classList.add("speaking");
+    speakerButton.textContent = "zastavit hlas";
+    speakerStatus.textContent = "Systém čte zprávu…";
+  };
+
+  utterance.onend = () => {
+    speakerButton.classList.remove("speaking");
+    speakerButton.textContent = "poslechni si";
+    speakerStatus.textContent = "";
+  };
+
+  utterance.onerror = () => {
+    speakerButton.classList.remove("speaking");
+    speakerButton.textContent = "poslechni si";
+    speakerStatus.textContent =
+      "Hlasové čtení se nepodařilo spustit.";
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+/* =========================================================
+   UDÁLOSTI
+   ========================================================= */
+
 startButton.addEventListener("click", startGame);
-
 checkButton.addEventListener("click", checkCode);
+copyButton.addEventListener("click", copyResult);
+emailButton.addEventListener("click", sendResultByEmail);
+restartButton.addEventListener("click", () => window.location.reload());
+speakerButton.addEventListener("click", speakCurrentScreen);
 
-codeInput.addEventListener("keydown", function (event) {
+codeInput.addEventListener("input", () => {
+  codeInput.value = codeInput.value
+    .replace(/\D/g, "")
+    .slice(0, 4);
+});
+
+codeInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     checkCode();
   }
 });
 
-restartButton.addEventListener("click", showIntro);
+recipientEmail.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    sendResultByEmail();
+  }
+});
 
+window.addEventListener("beforeunload", stopSpeaking);
+
+/*
+  Některé prohlížeče načtou seznam hlasů až dodatečně.
+  Tímto se seznam připraví, jakmile je dostupný.
+*/
+if ("speechSynthesis" in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+} else {
+  speakerButton.disabled = true;
+  speakerStatus.textContent =
+    "Hlasové čtení není v tomto prohlížeči dostupné.";
+}
+
+/* První zobrazení stránky */
 showIntro();

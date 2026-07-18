@@ -2,15 +2,35 @@
   box-sizing: border-box;
 }
 
+:root {
+  --blue-dark: #123c69;
+  --blue: #1f78b4;
+  --blue-hover: #145a86;
+  --green: #0a7a28;
+  --green-hover: #075c1e;
+  --red: #b00020;
+  --panel: #eef7ff;
+  --panel-border: #b8d9f4;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   font-family: Georgia, "Times New Roman", serif;
+
+  /*
+    Když soubor obrazky/pozadi.jpg chybí, zůstane viditelný alespoň
+    barevný přechod a hra bude dál fungovat.
+  */
   background:
     linear-gradient(rgba(10, 35, 70, 0.65), rgba(10, 35, 70, 0.82)),
     url("obrazky/pozadi.jpg");
+
+  background-color: #123c69;
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,12 +93,12 @@ h1 {
   margin: 0;
   text-align: center;
   font-size: 2.1rem;
-  color: #123c69;
+  color: var(--blue-dark);
 }
 
 h2 {
   margin-top: 0;
-  color: #123c69;
+  color: var(--blue-dark);
 }
 
 .story-text {
@@ -89,8 +109,12 @@ h2 {
   text-align: center;
 }
 
+.story-text p {
+  margin: 0 0 16px;
+}
+
 .story-text strong {
-  color: #b00020;
+  color: var(--red);
 }
 
 .system-message {
@@ -104,7 +128,6 @@ h2 {
   font-weight: bold;
   letter-spacing: 1px;
 }
-
 
 .voice-panel {
   display: flex;
@@ -137,7 +160,7 @@ h2 {
 
 .speaker-status {
   min-height: 22px;
-  color: #123c69;
+  color: var(--blue-dark);
   font-size: 0.95rem;
   font-weight: bold;
 }
@@ -148,8 +171,10 @@ h2 {
 }
 
 .image-box img {
+  display: block;
   max-width: 100%;
-  max-height: 360px;
+  max-height: 420px;
+  margin: 0 auto;
   border-radius: 20px;
   border: 2px solid #ddd;
   object-fit: contain;
@@ -161,9 +186,9 @@ h2 {
 .result-box {
   margin-top: 28px;
   padding: 22px;
-  background: #eef7ff;
+  background: var(--panel);
   border-radius: 20px;
-  border: 2px solid #b8d9f4;
+  border: 2px solid var(--panel-border);
 }
 
 .team-form label {
@@ -172,7 +197,8 @@ h2 {
   margin: 12px 0;
 }
 
-.team-form input {
+.team-form input,
+.email-recipient input {
   display: block;
   width: 100%;
   margin-top: 6px;
@@ -190,11 +216,13 @@ h2 {
 
 .code-row {
   display: flex;
+  justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
 }
 
 input {
+  font-family: inherit;
   font-size: 1.8rem;
   letter-spacing: 10px;
   text-align: center;
@@ -205,21 +233,35 @@ input {
   background: white;
 }
 
+input:focus {
+  border-color: var(--blue);
+  outline: 3px solid rgba(31, 120, 180, 0.18);
+}
+
 button {
   cursor: pointer;
   border: none;
   border-radius: 12px;
   padding: 14px 22px;
+  font-family: inherit;
   font-size: 1rem;
   font-weight: bold;
-  background: #1f78b4;
+  background: var(--blue);
   color: white;
-  transition: 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 button:hover {
-  background: #145a86;
+  background: var(--blue-hover);
   transform: translateY(-1px);
+}
+
+button:focus-visible {
+  outline: 3px solid rgba(31, 120, 180, 0.35);
+  outline-offset: 3px;
 }
 
 button:disabled {
@@ -232,12 +274,12 @@ button:disabled {
   display: block;
   margin: 28px auto 0;
   font-size: 1.2rem;
-  background: #0a7a28;
+  background: var(--green);
   padding: 16px 28px;
 }
 
 .start-button:hover {
-  background: #075c1e;
+  background: var(--green-hover);
 }
 
 .restart {
@@ -250,22 +292,38 @@ button:disabled {
   min-height: 28px;
   font-weight: bold;
   margin-bottom: 0;
+  text-align: center;
 }
 
 .message.ok {
-  color: #0a7a28;
+  color: var(--green);
 }
 
 .message.error {
-  color: #b00020;
+  color: var(--red);
 }
 
 .message.info {
-  color: #123c69;
+  color: var(--blue-dark);
+}
+
+.result-summary {
+  line-height: 1.7;
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--panel-border);
+  text-align: center;
+}
+
+.result-table-wrap {
+  width: 100%;
+  overflow-x: auto;
 }
 
 .result-table {
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
   margin-top: 18px;
   background: white;
@@ -273,7 +331,7 @@ button:disabled {
 
 .result-table th,
 .result-table td {
-  border: 1px solid #b8d9f4;
+  border: 1px solid var(--panel-border);
   padding: 10px;
   text-align: center;
 }
@@ -282,30 +340,43 @@ button:disabled {
   background: #d9efff;
 }
 
-.result-summary {
-  line-height: 1.7;
-  background: white;
-  padding: 16px;
-  border-radius: 14px;
-  border: 1px solid #b8d9f4;
-  text-align: center;
-}
-
 .result-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 18px;
   justify-content: center;
+  align-items: flex-start;
+}
+
+.email-recipient {
+  width: 100%;
+  max-width: 560px;
+  flex-basis: 100%;
+  margin: 0 auto 8px;
+  text-align: left;
+}
+
+.email-recipient label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--blue-dark);
+  text-align: center;
+}
+
+.email-recipient input {
+  margin: 0;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 @media (max-width: 700px) {
   body {
     padding: 12px;
+    align-items: flex-start;
   }
 
   .card {

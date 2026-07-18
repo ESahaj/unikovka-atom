@@ -3,11 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaCore Research Labs</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
+  <title>NovaCore Research Labs</title>
+
+  <!-- Číslo za otazníkem pomáhá obejít starou verzi uloženou v cache. -->
+  <link rel="stylesheet" href="style.css?v=20260718-1">
+</head>
+
+<body>
 <main class="game-wrapper">
   <section class="card">
 
@@ -22,10 +25,20 @@
     <h1 id="title">NovaCore Research Labs</h1>
 
     <div class="voice-panel">
-      <button id="speakerButton" class="speaker-button" type="button" aria-label="Poslechni si text této obrazovky mužským počítačovým hlasem">
+      <button
+        id="speakerButton"
+        class="speaker-button"
+        type="button"
+        aria-label="Přečíst text obrazovky"
+      >
         poslechni si
       </button>
-      <span id="speakerStatus" class="speaker-status" aria-live="polite"></span>
+
+      <span
+        id="speakerStatus"
+        class="speaker-status"
+        aria-live="polite"
+      ></span>
     </div>
 
     <div id="imageBox" class="image-box hidden">
@@ -39,36 +52,65 @@
 
       <label>
         Název týmu:
-        <input type="text" id="teamName" placeholder="např. Atomoví detektivové">
+        <input
+          type="text"
+          id="teamName"
+          placeholder="např. Atomoví detektivové"
+          maxlength="80"
+        >
       </label>
 
       <label>
         Hráč 1:
-        <input type="text" id="player1" placeholder="jméno hráče">
+        <input
+          type="text"
+          id="player1"
+          placeholder="jméno hráče"
+          maxlength="60"
+        >
       </label>
 
       <label>
         Hráč 2:
-        <input type="text" id="player2" placeholder="jméno hráče">
+        <input
+          type="text"
+          id="player2"
+          placeholder="jméno hráče"
+          maxlength="60"
+        >
       </label>
 
       <label>
         Hráč 3:
-        <input type="text" id="player3" placeholder="jméno hráče">
+        <input
+          type="text"
+          id="player3"
+          placeholder="jméno hráče"
+          maxlength="60"
+        >
       </label>
 
       <label>
         Hráč 4:
-        <input type="text" id="player4" placeholder="jméno hráče">
+        <input
+          type="text"
+          id="player4"
+          placeholder="jméno hráče"
+          maxlength="60"
+        >
       </label>
 
-      <p id="formMessage" class="message"></p>
+      <p id="formMessage" class="message" aria-live="polite"></p>
     </div>
 
-    <button id="startButton" class="start-button">Spustit misi</button>
+    <button id="startButton" class="start-button" type="button">
+      Spustit misi
+    </button>
 
     <div id="codeBox" class="code-box hidden">
-      <label for="codeInput">Zadej čtyřmístný přístupový kód:</label>
+      <label for="codeInput">
+        Zadej čtyřmístný přístupový kód:
+      </label>
 
       <div class="code-row">
         <input
@@ -78,26 +120,53 @@
           placeholder="____"
           autocomplete="off"
           inputmode="numeric"
+          aria-label="Čtyřmístný přístupový kód"
         >
 
-        <button id="checkButton">Ověřit kód</button>
+        <button id="checkButton" type="button">
+          Ověřit kód
+        </button>
       </div>
 
-      <p id="message" class="message"></p>
+      <p id="message" class="message" aria-live="polite"></p>
     </div>
 
     <div id="resultBox" class="result-box hidden"></div>
 
     <div class="result-buttons hidden" id="resultButtons">
-      <button id="copyButton">Zkopírovat výsledek</button>
-      <button id="emailButton">Odeslat výsledek e-mailem</button>
+
+      <div class="email-recipient">
+        <label for="recipientEmail">
+          Kam odeslat výsledek?
+        </label>
+
+        <input
+          type="email"
+          id="recipientEmail"
+          placeholder="např. ucitel@skola.cz"
+          autocomplete="email"
+        >
+
+        <p id="resultActionMessage" class="message" aria-live="polite"></p>
+      </div>
+
+      <button id="copyButton" type="button">
+        Zkopírovat výsledek
+      </button>
+
+      <button id="emailButton" type="button">
+        Odeslat výsledek e-mailem
+      </button>
     </div>
 
-    <button id="restartButton" class="restart hidden">Hrát znovu</button>
+    <button id="restartButton" class="restart hidden" type="button">
+      Hrát znovu
+    </button>
 
   </section>
 </main>
 
-<script src="script.js"></script>
+<!-- Číslo za otazníkem pomáhá obejít starou verzi uloženou v cache. -->
+<script src="script.js?v=20260718-1"></script>
 </body>
 </html>
